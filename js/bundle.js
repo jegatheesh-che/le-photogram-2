@@ -7661,7 +7661,7 @@
     }, { passive: true });
     const pathSegments = window.location.pathname.split("/").filter(Boolean);
     let lastSegment = pathSegments.pop() || "index.html";
-    if (!lastSegment.includes(".") || lastSegment === "le-photogram") {
+    if (!lastSegment.includes(".") || lastSegment === "le-photogram" || lastSegment === "le-photogram-2") {
       lastSegment = "index.html";
     }
     const cleanPath = lastSegment.split("?")[0].split("#")[0];
