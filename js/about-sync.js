@@ -9,20 +9,30 @@ export async function initAboutSync() {
   try {
     let data = null;
 
-    try {
-      const res = await fetch('api/about.php');
-      const contentType = res.headers.get('content-type') || '';
-      if (res.ok && contentType.includes('application/json')) {
-        const json = await res.json();
-        if (json.success && json.data) {
-          data = json.data;
+    const isStaticHost =
+      window.location.protocol === 'file:' ||
+      window.location.hostname.includes('vercel.app') ||
+      window.location.hostname.includes('github.io') ||
+      window.location.hostname.includes('loca.lt') ||
+      window.location.port === '5173' ||
+      window.location.port === '4173';
+
+    if (!isStaticHost) {
+      try {
+        const res = await fetch('api/about.php');
+        const contentType = res.headers.get('content-type') || '';
+        if (res.ok && contentType.includes('application/json')) {
+          const json = await res.json();
+          if (json.success && json.data) {
+            data = json.data;
+          }
         }
+      } catch (e) {
+        // PHP API not present or returned non-JSON
       }
-    } catch (e) {
-      // PHP API not present or returned non-JSON
     }
 
-    // Seamless fallback to static data/about.json for GitHub Pages / static hosting
+    // Load static data/about.json for static hosting or as fallback
     if (!data) {
       try {
         const staticRes = await fetch('data/about.json');
