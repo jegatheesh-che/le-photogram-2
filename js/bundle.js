@@ -7661,8 +7661,10 @@
     }, { passive: true });
     const pathSegments = window.location.pathname.split("/").filter(Boolean);
     let lastSegment = pathSegments.pop() || "index.html";
-    if (!lastSegment.includes(".") || lastSegment === "le-photogram" || lastSegment === "le-photogram-2") {
+    if (lastSegment === "le-photogram" || lastSegment === "le-photogram-2") {
       lastSegment = "index.html";
+    } else if (!lastSegment.includes(".")) {
+      lastSegment = `${lastSegment}.html`;
     }
     const cleanPath = lastSegment.split("?")[0].split("#")[0];
     document.querySelectorAll(".nav-links .nav-link, .mobile-nav-links a, .mobile-sheet-menu .mobile-menu-item, .mobile-menu-signout").forEach((link) => {

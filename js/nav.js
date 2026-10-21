@@ -17,8 +17,10 @@ export function initNav() {
   // Sync active navigation link across desktop and mobile
   const pathSegments = window.location.pathname.split('/').filter(Boolean);
   let lastSegment = pathSegments.pop() || 'index.html';
-  if (!lastSegment.includes('.') || lastSegment === 'le-photogram' || lastSegment === 'le-photogram-2') {
+  if (lastSegment === 'le-photogram' || lastSegment === 'le-photogram-2') {
     lastSegment = 'index.html';
+  } else if (!lastSegment.includes('.')) {
+    lastSegment = `${lastSegment}.html`;
   }
   const cleanPath = lastSegment.split('?')[0].split('#')[0];
 
